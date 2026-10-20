@@ -192,6 +192,150 @@
     }
    },
    "path": "v1/20261020-143200.json"
+  },
+  {
+   "version": "v2",
+   "run_id": "20261020-143218",
+   "title": "v2: keep the writer's voice",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:32:18+00:00",
+   "elapsed_s": 17.8,
+   "total_tokens": 84066,
+   "summary": {
+    "cer": 0.0538,
+    "exact": 0.5122,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0028,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0053,
+      "exact": 0.8462,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.1201,
+      "exact": 0,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.1146,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.042,
+      "exact": 0.2222,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.2759,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v2/20261020-143218.json"
+  },
+  {
+   "version": "v2",
+   "run_id": "20261020-143236",
+   "title": "v2: keep the writer's voice",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:32:36+00:00",
+   "elapsed_s": 17.6,
+   "total_tokens": 84046,
+   "summary": {
+    "cer": 0.0472,
+    "exact": 0.5366,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0028,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0,
+      "exact": 1,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.1143,
+      "exact": 0,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.1061,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0401,
+      "exact": 0.2222,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.2116,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v2/20261020-143236.json"
+  },
+  {
+   "version": "v2",
+   "run_id": "20261020-143252",
+   "title": "v2: keep the writer's voice",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:32:52+00:00",
+   "elapsed_s": 16.8,
+   "total_tokens": 84110,
+   "summary": {
+    "cer": 0.053,
+    "exact": 0.5,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0028,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0053,
+      "exact": 0.8462,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.1133,
+      "exact": 0,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.1146,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0453,
+      "exact": 0.1667,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.2666,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v2/20261020-143252.json"
   }
  ]
 }
