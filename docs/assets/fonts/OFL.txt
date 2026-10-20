@@ -1,16 +1,14 @@
 Fonts bundled in this folder and their copyright notices
 =========================================================
 
-newsreader-latin-opsz-{normal,italic}.woff2 (Newsreader, variable; Latin subset via Fontsource):
+newsreader-latin-opsz-normal.woff2 (Newsreader, variable; Latin subset via Fontsource):
   Copyright 2020 The Newsreader Project Authors (https://github.com/productiontype/Newsreader)
-outfit-latin-wght-normal.woff2 (Outfit, variable; Latin subset via Fontsource):
-  Copyright 2021 The Outfit Project Authors (https://github.com/Outfitio/Outfit-Fonts)
 inter-latin-opsz-normal.woff2 (Inter, variable; Latin subset via Fontsource):
   Copyright 2016 The Inter Project Authors (https://github.com/rsms/inter)
-jetbrains-mono-latin-{400,500}-normal.woff2 (JetBrains Mono; Latin subset via Fontsource):
+jetbrains-mono-latin-400-normal.woff2 (JetBrains Mono; Latin subset via Fontsource):
   Copyright 2020 The JetBrains Mono Project Authors (https://github.com/JetBrains/JetBrainsMono)
 
-All four families are licensed under the SIL Open Font License, Version 1.1, reproduced below.
+All three families are licensed under the SIL Open Font License, Version 1.1, reproduced below.
 The files are unmodified subsets as published by Fontsource.
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
