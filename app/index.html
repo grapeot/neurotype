@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neurotype</title>
+<link rel="stylesheet" href="assets/neurotype.css">
+<style>
+  main.wrap { padding-top: 40px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  textarea#in { width: 100%; min-height: 190px; resize: vertical; font: 1.1rem/1.5 var(--mono); }
+  .controls { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+  .out { min-height: 190px; font: 1.2rem/1.5 var(--serif); white-space: pre-wrap; }
+  .why { margin-top: 14px; font-size: .95rem; color: var(--ink-2); }
+  .why b { font: 600 .72rem var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); display: block; margin-bottom: 4px; }
+  .examples button { font: .85rem var(--mono); background: transparent; border: 1px dashed var(--rule); border-radius: 6px; padding: 4px 8px; margin: 0 6px 6px 0; text-align: left; cursor: pointer; color: var(--ink-2); }
+  .err { color: var(--second); }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html">Neuro<span>type</span></a>
+  <nav><a href="index.html" aria-current="page">Type</a></nav>
+</div></header>
+<main class="wrap">
+  <div class="kicker">Type freely</div>
+  <h1>Don't fix anything. Just type.</h1>
+  <p class="lede narrow">Neurotype reconstructs the text you meant from the text your fingers produced. Pick a corrector version and see what it does, and why.</p>
+
+  <div class="grid">
+    <section class="card">
+      <label for="in" class="kicker">What you typed</label>
+      <textarea id="in" spellcheck="false" placeholder="tbh i dunno if we need anotehr dashbboard, we got lije five alrady"></textarea>
+      <div class="controls">
+        <button class="btn" id="go">Reconstruct</button>
+        <label class="small muted">Version <select id="ver"></select></label>
+        <span class="small muted">Cmd/Ctrl + Enter</span>
+      </div>
+      <div class="examples small" style="margin-top:14px">
+        <div class="muted" style="margin-bottom:6px">Try one:</div>
+        <button>tbh i dunno if we need anotehr dashbboard, we got lije five alrady</button>
+        <button>Can you aak shivon whether tge marygold launch is still on track?</button>
+        <button>The old `calcualte_total` function stlil calls `get_custmer_id` insdie.</button>
+        <button>my phone is almost dead, yrcy ,r ;syrt</button>
+      </div>
+    </section>
+    <section class="card">
+      <div class="kicker">What you meant <span id="meta" class="muted" style="letter-spacing:0;text-transform:none;font-weight:400"></span></div>
+      <div class="out" id="out"><span class="muted">The reconstruction appears here.</span></div>
+      <div class="why" id="why"></div>
+    </section>
+  </div>
+  <p class="small muted" style="margin-top:18px">Green marks text the corrector added, red marks text it removed. The API key stays on the local server; this page only talks to <code>/api/correct</code>.</p>
+</main>
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// Word-level diff (LCS), enough for short messages.
+function diff(a, b) {
+  const A = a.split(/(\s+)/), B = b.split(/(\s+)/);
+  const n = A.length, m = B.length, L = Array.from({length: n + 1}, () => new Int32Array(m + 1));
+  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--)
+    L[i][j] = A[i] === B[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+  let i = 0, j = 0, out = "";
+  while (i < n && j < m) {
+    if (A[i] === B[j]) { out += esc(A[i]); i++; j++; }
+    else if (L[i + 1][j] >= L[i][j + 1]) { if (A[i].trim()) out += `<del class="rem">${esc(A[i])}</del>`; else out += esc(A[i]); i++; }
+    else { if (B[j].trim()) out += `<ins class="add">${esc(B[j])}</ins>`; else out += esc(B[j]); j++; }
+  }
+  while (i < n) { if (A[i].trim()) out += `<del class="rem">${esc(A[i])}</del>`; i++; }
+  while (j < m) { if (B[j].trim()) out += `<ins class="add">${esc(B[j])}</ins>`; else out += esc(B[j]); j++; }
+  return out;
+}
+
+async function loadVersions() {
+  try {
+    const r = await fetch("api/versions");
+    const d = await r.json();
+    $("#ver").innerHTML = d.versions.map((v) => `<option>${v}</option>`).join("");
+    $("#ver").value = d.versions[d.versions.length - 1];
+  } catch (e) {
+    $("#out").innerHTML = '<span class="err">Server not reachable. Start it with <code>python server.py</code>.</span>';
+  }
+}
+
+async function run() {
+  const text = $("#in").value.trim();
+  if (!text) return;
+  $("#go").disabled = true;
+  $("#out").innerHTML = '<span class="muted">Thinking…</span>';
+  $("#why").textContent = "";
+  try {
+    const r = await fetch("api/correct", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({text, version: $("#ver").value})});
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+    $("#out").innerHTML = diff(text, d.output);
+    $("#why").innerHTML = `<b>Rationale</b>${esc(d.rationale || "")}`;
+    $("#meta").textContent = `· ${d.version} · ${d.model} · ${d.latency_s}s`;
+  } catch (e) {
+    $("#out").innerHTML = `<span class="err">${esc(String(e.message || e))}</span>`;
+  } finally { $("#go").disabled = false; }
+}
+
+$("#go").addEventListener("click", run);
+$("#in").addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) run(); });
+document.querySelectorAll(".examples button").forEach((b) => b.addEventListener("click", () => { $("#in").value = b.textContent; run(); }));
+loadVersions();
+</script>
+</body>
+</html>

@@ -1,0 +1,513 @@
+{
+  "name": "neurotype-curated",
+  "version": 1,
+  "seed": 7,
+  "description": "Short messages typed carelessly (messy_text) and what the writer meant (ground_truth).",
+  "pattern_counts": {
+    "plain_typos": 28,
+    "casual_voice": 13,
+    "glossary_names": 12,
+    "unknown_names": 6,
+    "pasted_verbatim": 18,
+    "shifted_hands": 5
+  },
+  "items": [
+    {
+      "id": 1,
+      "pattern": "plain_typos",
+      "ground_truth": "The quarterly report is due on Friday, so please send me your numbers by Wednesday afternoon.",
+      "messy_text": "Teh quarterly repport is dueon Fiday, so plrase sen me yoru numbes by Wednesda afteenoon."
+    },
+    {
+      "id": 2,
+      "pattern": "plain_typos",
+      "ground_truth": "I left my charger in the conference room on the third floor. Could someone grab it for me?",
+      "messy_text": "I left my charger in teh conference roon on the third fkoor. Could somenoe garb it fr me?"
+    },
+    {
+      "id": 3,
+      "pattern": "plain_typos",
+      "ground_truth": "Thanks for the detailed feedback. I will update the proposal and share a new draft tomorrow.",
+      "messy_text": "Thans fr the detailed feedvack. I wil updatr the propoasl and share a new draft tomorrow."
+    },
+    {
+      "id": 4,
+      "pattern": "plain_typos",
+      "ground_truth": "The flight was delayed by two hours, so I will probably miss the beginning of the workshop.",
+      "messy_text": "The fligt wasdwlayed by teo houts, so I will probably missteh beginning of thee workshop."
+    },
+    {
+      "id": 5,
+      "pattern": "plain_typos",
+      "ground_truth": "Can we move our weekly sync to Thursday morning? I have a dentist appointment on Tuesday.",
+      "messy_text": "Can we mpve our weekly sync to Thursda mirning? I have a denitst appointment on Tuesdsy."
+    },
+    {
+      "id": 6,
+      "pattern": "plain_typos",
+      "ground_truth": "The new coffee machine in the kitchen makes a strange noise, but the espresso is surprisingly good.",
+      "messy_text": "The new coffee machinee in the kitchem makes a sttrange nosie, but the espresso is surprisinglt good."
+    },
+    {
+      "id": 7,
+      "pattern": "plain_typos",
+      "ground_truth": "Please remember to water the plants while I am away. The small ones need water every day.",
+      "messy_text": "Please reemmber to water the palnts while I am away. Te small obes nede wate every dat."
+    },
+    {
+      "id": 8,
+      "pattern": "plain_typos",
+      "ground_truth": "Our customer survey shows that most people care about battery life more than screen size.",
+      "messy_text": "Our customer survey shows that mos peope care abotu battery life moe thanscreensize."
+    },
+    {
+      "id": 9,
+      "pattern": "plain_typos",
+      "ground_truth": "I finished reading the article you recommended. The section about sleep and memory was fascinating.",
+      "messy_text": "I finished redaing te artticle yo recommwnded. Teh sction avout sleepand memry wa fascinating."
+    },
+    {
+      "id": 10,
+      "pattern": "plain_typos",
+      "ground_truth": "The library will close early on Saturday because of the holiday, so plan your visit accordingly.",
+      "messy_text": "Thelibrary willclose early on Saturdat because of the hoiday, so plan yourr vidit axcordingly."
+    },
+    {
+      "id": 11,
+      "pattern": "plain_typos",
+      "ground_truth": "We should order more printer paper before the end of the month. We are almost out again.",
+      "messy_text": "We should orrder more printer paper before the end of teh mobth. We arr almost out ahain."
+    },
+    {
+      "id": 12,
+      "pattern": "plain_typos",
+      "ground_truth": "My sister is visiting next weekend, so I will be offline on Saturday and most of Sunday.",
+      "messy_text": "My sister isvisiting nrxt wwekend, so Iwilk be offline on Satturday ans most of Sunday."
+    },
+    {
+      "id": 13,
+      "pattern": "plain_typos",
+      "ground_truth": "The recipe calls for two cups of flour, one egg, and a pinch of salt. It takes forty minutes.",
+      "messy_text": "The reicpe callsfor two cyps of folur, one ehg, anf a punch of salr. Ittakse fort minutes."
+    },
+    {
+      "id": 14,
+      "pattern": "plain_typos",
+      "ground_truth": "Traffic on the bridge was terrible this morning. I think there was an accident near the exit.",
+      "messy_text": "Traffic on thebridge wasterrible this morning. I think therewas an accident near theexti."
+    },
+    {
+      "id": 15,
+      "pattern": "plain_typos",
+      "ground_truth": "Could you double check the invoice before we send it? The total looks a little high to me.",
+      "messy_text": "Couldyou double chexk the ivnoice before wesend it? Thr total looksa little hih to me."
+    },
+    {
+      "id": 16,
+      "pattern": "plain_typos",
+      "ground_truth": "The kids want to go camping this summer, but I am worried about the weather in the mountains.",
+      "messy_text": "The kids want to go camping this sumer, but Iam wortied about the weathrr in teh mountains."
+    },
+    {
+      "id": 17,
+      "pattern": "plain_typos",
+      "ground_truth": "I booked a table for six people at the Italian restaurant downtown for seven thirty tonight.",
+      "messy_text": "I bopked a talbe for six peope at the Italian resturant downton fro sevne thirty tonight."
+    },
+    {
+      "id": 18,
+      "pattern": "plain_typos",
+      "ground_truth": "The software update fixed the login problem, but now the dashboard loads much more slowly.",
+      "messy_text": "Thee software updatefixde tge login problemm, btu noow te dashboard loads mcuh more slowwly."
+    },
+    {
+      "id": 19,
+      "pattern": "plain_typos",
+      "ground_truth": "Remember that the office will be closed on Monday for maintenance on the heating system.",
+      "messy_text": "Remembre thta theofifce wlil be clpsed on Moday for maintenance on thhe hwating sysetm."
+    },
+    {
+      "id": 20,
+      "pattern": "plain_typos",
+      "ground_truth": "I think we need a clearer agenda for the planning meeting, otherwise it will run long again.",
+      "messy_text": "I think we needd a cleraer agendaforte planninh meetimg, ohterwise it wil runlong agani."
+    },
+    {
+      "id": 21,
+      "pattern": "plain_typos",
+      "ground_truth": "The museum has a new exhibition about ancient maps. Would you like to go together next month?",
+      "messy_text": "Thhe musrum haas a new exhibition about ancint mapd. Would you like to go toegther nex mnoth?"
+    },
+    {
+      "id": 22,
+      "pattern": "plain_typos",
+      "ground_truth": "Our team doubled its response rate after we started sending shorter and friendlier emails.",
+      "messy_text": "Ourtema double ist response raye afyer we started sendinng shorter and ftiendlier emails."
+    },
+    {
+      "id": 23,
+      "pattern": "plain_typos",
+      "ground_truth": "Please bring a jacket tomorrow. The forecast says it will be cold and windy near the coast.",
+      "messy_text": "Plese bringa jacket toorrow. Teh foecast sats it will becokd ad widny near teh coast."
+    },
+    {
+      "id": 24,
+      "pattern": "plain_typos",
+      "ground_truth": "I really enjoyed the concert last night. The drummer was incredible during the final song.",
+      "messy_text": "I reallyenjoyed the concertlast night. The drummmer was incredble during thefinal song."
+    },
+    {
+      "id": 25,
+      "pattern": "plain_typos",
+      "ground_truth": "The landlord finally agreed to replace the old windows before the winter arrives.",
+      "messy_text": "The landlrd fibally agered to replave teh old windows before the wnter arives."
+    },
+    {
+      "id": 26,
+      "pattern": "plain_typos",
+      "ground_truth": "Please print twenty copies of the handout and leave them on the table near the entrance.",
+      "messy_text": "Plaese pirnt twenty copes of th handoit and levae them onteh tablle near the entranc."
+    },
+    {
+      "id": 27,
+      "pattern": "plain_typos",
+      "ground_truth": "We are thinking about adopting a dog, but our apartment might be too small for a big one.",
+      "messy_text": "We are thinking about adoptin a doog, but our apartmen migght be too smalk for a bog one."
+    },
+    {
+      "id": 28,
+      "pattern": "plain_typos",
+      "ground_truth": "The battery on my laptop drains quickly when I have too many browser tabs open.",
+      "messy_text": "The battery on my lapotp drans quicklywheen I havee too many browser tabs opn."
+    },
+    {
+      "id": 29,
+      "pattern": "casual_voice",
+      "ground_truth": "me and him are gonna grab tacos after work, u want anything?",
+      "messy_text": "me and hmi arw gonna grb tacosafter work, u watn anything?"
+    },
+    {
+      "id": 30,
+      "pattern": "casual_voice",
+      "ground_truth": "lol that meeting was sooo long, i kinda zoned out halfway thru",
+      "messy_text": "lolthat meeting wa sooi long, ikinda zonned out halfway thru"
+    },
+    {
+      "id": 31,
+      "pattern": "casual_voice",
+      "ground_truth": "tbh i dunno if we need another dashboard, we got like five already",
+      "messy_text": "tbh i dunno if we need another dashboard, we goot like five akready"
+    },
+    {
+      "id": 32,
+      "pattern": "casual_voice",
+      "ground_truth": "ya i'm omw, gonna be like 10 min late cuz the bus is slow",
+      "messy_text": "ya i'm omw, gonna be like 10 min laate cyz the bus is slwo"
+    },
+    {
+      "id": 33,
+      "pattern": "casual_voice",
+      "ground_truth": "imo the old logo looked way better, the new one is kinda meh",
+      "messy_text": "imo the old logo looked way bettter, the nw one iskibda mhe"
+    },
+    {
+      "id": 34,
+      "pattern": "casual_voice",
+      "ground_truth": "idk who ate my yogurt but they owe me big time lol",
+      "messy_text": "idk who aye my yogurtbut they owe me big timelok"
+    },
+    {
+      "id": 35,
+      "pattern": "casual_voice",
+      "ground_truth": "btw the wifi password changed again, ask the front desk for the new one",
+      "messy_text": "btw thr wifi password changed aagin, ask the frnt desk for the ne one"
+    },
+    {
+      "id": 36,
+      "pattern": "casual_voice",
+      "ground_truth": "ngl this new keyboard is amazing, i type way faster now",
+      "messy_text": "ngl tis new keyboard is amazing, i tyype way fastee now"
+    },
+    {
+      "id": 37,
+      "pattern": "casual_voice",
+      "ground_truth": "ok so basically the client wants everything done yesterday, as usual",
+      "messy_text": "ok so basivally th client wants everything doen yesterday, as usula"
+    },
+    {
+      "id": 38,
+      "pattern": "casual_voice",
+      "ground_truth": "brb grabbing coffee, ping me if the build breaks again",
+      "messy_text": "bbr grbabing coffee, pign me if the byild breaks agaiin"
+    },
+    {
+      "id": 39,
+      "pattern": "casual_voice",
+      "ground_truth": "just landed in denver, gonna call you once i get to the hotel",
+      "messy_text": "just landed in dnver, gona call you once i get to the hotel"
+    },
+    {
+      "id": 40,
+      "pattern": "casual_voice",
+      "ground_truth": "the printer on the second floor is jammed again, i already called it support",
+      "messy_text": "the printer on teh second floor is jammwd again, i already calle it support"
+    },
+    {
+      "id": 41,
+      "pattern": "casual_voice",
+      "ground_truth": "i moved the budget review to monday since half the team is out on friday",
+      "messy_text": "i moved the budgetreview to momday sinc half the team is out on fiday"
+    },
+    {
+      "id": 42,
+      "pattern": "glossary_names",
+      "ground_truth": "Can you ask Siobhan whether the Marigold launch is still on track for next Tuesday?",
+      "messy_text": "Can you ask shivon whetherthe marygold launch is stll on track for nexr Tuesday?"
+    },
+    {
+      "id": 43,
+      "pattern": "glossary_names",
+      "ground_truth": "Joaquin and Niamh will present the Halcyon roadmap at the offsite in March.",
+      "messy_text": "wakeen anf neeve will present the halsyon roadmap at the offsite in March."
+    },
+    {
+      "id": 44,
+      "pattern": "glossary_names",
+      "ground_truth": "Please loop in Priyanka before we change anything in the Kestrl pipeline.",
+      "messy_text": "Please loop in preyanka before we change anyyhing in the kestrel ppeline."
+    },
+    {
+      "id": 45,
+      "pattern": "glossary_names",
+      "ground_truth": "Tadhg says the Bluefynn dashboard is down again, can someone take a look?",
+      "messy_text": "tige sayste bluefin dashboard is down again, can someone tak a loo?"
+    },
+    {
+      "id": 46,
+      "pattern": "glossary_names",
+      "ground_truth": "I had lunch with Aoife and she has great ideas for the Marigold onboarding flow.",
+      "messy_text": "I had lunchwith eefa and she has great ideas fr teh marrigold onboarding flow."
+    },
+    {
+      "id": 47,
+      "pattern": "glossary_names",
+      "ground_truth": "Xiomara will cover for me on Friday, so send any Halcyon questions to her.",
+      "messy_text": "seeomara will cver forme on Friday, so send ay halcion questions to her."
+    },
+    {
+      "id": 48,
+      "pattern": "glossary_names",
+      "ground_truth": "Biscuit needs to go to the vet on Thursday, can Saoirse pick him up after school?",
+      "messy_text": "biskit needs to go to the ve on Thursday, csn seersha pock him up after scjool?"
+    },
+    {
+      "id": 49,
+      "pattern": "glossary_names",
+      "ground_truth": "Ngozi found the root cause of the Kestrl outage, it was an expired certificate.",
+      "messy_text": "ngozy found the root cause of the kestral outage, it ws an expiredd certigicate."
+    },
+    {
+      "id": 50,
+      "pattern": "glossary_names",
+      "ground_truth": "Let's meet at Cafe Lumiere with Joaquin to plan the Bluefynn migration.",
+      "messy_text": "Let's meetat cafe loomeair with joakeen to plan the blue fin migration."
+    },
+    {
+      "id": 51,
+      "pattern": "glossary_names",
+      "ground_truth": "Niamh approved the Marigold budget, so Priyanka can start hiring next month.",
+      "messy_text": "neev approvd the marigolde budget, so priyonka canstart huring next moth."
+    },
+    {
+      "id": 52,
+      "pattern": "glossary_names",
+      "ground_truth": "Saoirse and Tadhg are both out sick today, so the Halcyon review is postponed.",
+      "messy_text": "sersha and taig are botj out sick tdoay, so the halsion review is postponed."
+    },
+    {
+      "id": 53,
+      "pattern": "glossary_names",
+      "ground_truth": "Ngozi and Joaquin are pairing on the Bluefynn search feature this sprint.",
+      "messy_text": "ngozee and waukeen are pairing on the bluefinn searvh feature this sprint."
+    },
+    {
+      "id": 54,
+      "pattern": "unknown_names",
+      "ground_truth": "Caoimhe starts on Monday, can someone set up her laptop before she arrives?",
+      "messy_text": "keeva starts on Monday, can someone setup her laptop before seh arrivse?"
+    },
+    {
+      "id": 55,
+      "pattern": "unknown_names",
+      "ground_truth": "Eamonn from finance wants the Quillon invoices by Thursday.",
+      "messy_text": "aymon frmo finance wans the quilon invoices by Thursday."
+    },
+    {
+      "id": 56,
+      "pattern": "unknown_names",
+      "ground_truth": "Please add Oisin to the Marigold channel, he is helping with the launch.",
+      "messy_text": "Please add osheen to the marygold channel, he ishelping with teh launch."
+    },
+    {
+      "id": 57,
+      "pattern": "unknown_names",
+      "ground_truth": "The Zephyra beta opens next week, so tell Tadhg to prepare the release notes.",
+      "messy_text": "Te zefira beta opens next wek, so tell tige topeepare the release notes."
+    },
+    {
+      "id": 58,
+      "pattern": "unknown_names",
+      "ground_truth": "Dervla and Joaquin are flying to Lisbon for the Halcyon partner meeting.",
+      "messy_text": "dervela and wakeen are flyinf to Lisbon for the halsion parrtner meeeting."
+    },
+    {
+      "id": 59,
+      "pattern": "unknown_names",
+      "ground_truth": "Can you ask Grainne whether the Nuvola contract is ready to sign?",
+      "messy_text": "Can you ask grawnya whether the nuvolla cotnract is raedy to sign?"
+    },
+    {
+      "id": 60,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "It literally says \"Paymnet faild, plase try agian\" at checkout.",
+      "messy_text": "It ltierally says \"Paymnet faild, plase try agian\" at checkout."
+    },
+    {
+      "id": 61,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "The popup says \"Your sesion has expird, plese sign in agian\" now.",
+      "messy_text": "Thw popup says \"Your sesion has expird, plese sign in agian\" now."
+    },
+    {
+      "id": 62,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "Banner reads \"Welcom bak, valued costumer! Shop our lastest dealz\".",
+      "messy_text": "Bannerresds \"Welcom bak, valued costumer! Shop our lastest dealz\"."
+    },
+    {
+      "id": 63,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "The store title is \"Trak your expences effortlesly\" right now.",
+      "messy_text": "Tge store title is \"Trak your expences effortlesly\" rigjt no."
+    },
+    {
+      "id": 64,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "The toast reads \"Somthing went wrong, pleas contact suport\".",
+      "messy_text": "The toast reds \"Somthing went wrong, pleas contact suport\"."
+    },
+    {
+      "id": 65,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "Label says \"Adress\" and the button says \"Sumbit\" on mobile.",
+      "messy_text": "Label says \"Adress\" andd the button says \"Sumbit\" on mobile."
+    },
+    {
+      "id": 66,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "The menu offers \"expresso\" and \"cappucino\" and nobody cares.",
+      "messy_text": "Tje menu offerd \"expresso\" annd \"cappucino\" adn nobody cared."
+    },
+    {
+      "id": 67,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "One door says \"Employes only\", the other \"Autorized staff\".",
+      "messy_text": "Oen door sasy \"Employes only\", the other \"Autorized staff\"."
+    },
+    {
+      "id": 68,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "Top searches: \"wirless headphones\" and \"blutooth speaker\".",
+      "messy_text": "Top searhces: \"wirless headphones\" adn \"blutooth speaker\"."
+    },
+    {
+      "id": 69,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "His commits were just \"fixd stuff\" and \"more fixs\" again.",
+      "messy_text": "His comimts wre juust \"fixd stuff\" adn \"more fixs\" again."
+    },
+    {
+      "id": 70,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "The log says \"Unable to conect to host\" and \"retrying in 5 secnds\".",
+      "messy_text": "The log says \"Unable to conect to host\" adn \"retrying in 5 secnds\"."
+    },
+    {
+      "id": 71,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "The subject line was \"Urgnet: invocie overdue\" so I opened it.",
+      "messy_text": "The subject line wss \"Urgnet: invocie overdue\" so I openedit."
+    },
+    {
+      "id": 72,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "The config is `conf/defualt.yaml` with `MAX_CONECTIONS=50` set.",
+      "messy_text": "Theconfig is `conf/defualt.yaml` with `MAX_CONECTIONS=50` set."
+    },
+    {
+      "id": 73,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "Run `git chekout -b fix/redirct` then `npm run biuld` to test.",
+      "messy_text": "Rnu `git chekout -b fix/redirct` thn `npm run biuld` to test."
+    },
+    {
+      "id": 74,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "The old `calcualte_total` still calls `get_custmer_id` inside.",
+      "messy_text": "The odl `calcualte_total` still callss `get_custmer_id` inside."
+    },
+    {
+      "id": 75,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "Send it to billing@acme-exmaple.com and recieving@acme-exmaple.com.",
+      "messy_text": "Send it to billing@acme-exmaple.com an recieving@acme-exmaple.com."
+    },
+    {
+      "id": 76,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "The guide at https://docs.examplle.dev/instal still says `setpu.sh`.",
+      "messy_text": "The guide at https://docs.examplle.dev/instal still sas `setpu.sh`."
+    },
+    {
+      "id": 77,
+      "pattern": "pasted_verbatim",
+      "ground_truth": "Tag it #DevFestt and join the `Guest_Netwrok` network tonight.",
+      "messy_text": "Tag it #DevFestt and jon tge `Guest_Netwrok` netwrk tonight."
+    },
+    {
+      "id": 78,
+      "pattern": "shifted_hands",
+      "ground_truth": "the train is late again so start without me",
+      "messy_text": "the train is late again so dysty eoyjpiy ,r",
+      "note": "last 3 words typed one key to the right"
+    },
+    {
+      "id": 79,
+      "pattern": "shifted_hands",
+      "ground_truth": "can you pick up milk on the way home",
+      "messy_text": "can you pick up milk on yjr esu jp,r",
+      "note": "last 3 words typed one key to the right"
+    },
+    {
+      "id": 80,
+      "pattern": "shifted_hands",
+      "ground_truth": "my phone is almost dead, text me later",
+      "messy_text": "my phone is almost dead, yrcy ,r ;syrt",
+      "note": "last 3 words typed one key to the right"
+    },
+    {
+      "id": 81,
+      "pattern": "shifted_hands",
+      "ground_truth": "the meeting is moved to thursday afternoon",
+      "messy_text": "the meeting is moved to yjitdfsu sgyrtmppm",
+      "note": "last 2 words typed one key to the right"
+    },
+    {
+      "id": 82,
+      "pattern": "shifted_hands",
+      "ground_truth": "please call me back when you are free",
+      "messy_text": "please call me back when upi str gtrr",
+      "note": "last 3 words typed one key to the right"
+    }
+  ]
+}

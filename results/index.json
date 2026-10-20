@@ -1,0 +1,197 @@
+{
+ "metric": "CER (character error rate, lower is better)",
+ "runs": [
+  {
+   "version": "v0",
+   "run_id": "20261020-143108",
+   "title": "v0: echo baseline",
+   "model": "none",
+   "started_at": "2026-10-20T21:31:08+00:00",
+   "elapsed_s": 0.0,
+   "total_tokens": 0,
+   "summary": {
+    "cer": 0.1087,
+    "exact": 0,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.1026,
+      "exact": 0,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0754,
+      "exact": 0,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.1502,
+      "exact": 0,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.1563,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0419,
+      "exact": 0,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.3136,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v0/20261020-143108.json"
+  },
+  {
+   "version": "v1",
+   "run_id": "20261020-143126",
+   "title": "v1: naive prompt",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:31:26+00:00",
+   "elapsed_s": 17.7,
+   "total_tokens": 75091,
+   "summary": {
+    "cer": 0.0814,
+    "exact": 0.3293,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0024,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.2069,
+      "exact": 0,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0789,
+      "exact": 0,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.0807,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0619,
+      "exact": 0,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.2745,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v1/20261020-143126.json"
+  },
+  {
+   "version": "v1",
+   "run_id": "20261020-143142",
+   "title": "v1: naive prompt",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:31:42+00:00",
+   "elapsed_s": 16.6,
+   "total_tokens": 74958,
+   "summary": {
+    "cer": 0.0773,
+    "exact": 0.3415,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0024,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.1866,
+      "exact": 0.0769,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0789,
+      "exact": 0,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.0762,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0619,
+      "exact": 0,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.2652,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v1/20261020-143142.json"
+  },
+  {
+   "version": "v1",
+   "run_id": "20261020-143200",
+   "title": "v1: naive prompt",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:32:00+00:00",
+   "elapsed_s": 17.8,
+   "total_tokens": 75097,
+   "summary": {
+    "cer": 0.0796,
+    "exact": 0.3415,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0024,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.1937,
+      "exact": 0.0769,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0847,
+      "exact": 0,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.0762,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0637,
+      "exact": 0,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.2652,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v1/20261020-143200.json"
+  }
+ ]
+}
