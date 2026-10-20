@@ -141,6 +141,12 @@ def rebuild_index() -> dict:
     return index
 
 
+def half_up(x: float, digits: int = 3) -> str:
+    """Round like JavaScript's toFixed, so the CLI and the dashboard print the same numbers."""
+    from decimal import ROUND_HALF_UP, Decimal
+    return str(Decimal(x).quantize(Decimal(1).scaleb(-digits), rounding=ROUND_HALF_UP))
+
+
 def compare() -> None:
     index = rebuild_index()
     by_version: dict[str, list[dict]] = {}
@@ -156,7 +162,7 @@ def compare() -> None:
         sd = statistics.stdev(cers) if len(cers) > 1 else 0.0
         ex = statistics.mean(r["summary"]["exact"] for r in rs)
         pats = " ".join(
-            f"{statistics.mean(r['summary']['patterns'][p]['cer'] for r in rs if p in r['summary']['patterns']):10.3f}"
+            f"{half_up(statistics.mean(r['summary']['patterns'][p]['cer'] for r in rs if p in r['summary']['patterns'])):>10s}"
             for p in patterns
         )
         print(f"{v:8s} {len(rs):4d} {statistics.mean(cers):7.4f} {sd:6.4f} {ex:6.2f}  {pats}")

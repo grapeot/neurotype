@@ -91,6 +91,12 @@ async function main() {
   window.addEventListener("resize", draw);
   heat($("#heat"), runs, versions);
   noise($("#noise"), runs, versions);
+  // Every pattern CER quoted in the prose comes from the same means as the heat table.
+  document.querySelectorAll("[data-pcer]").forEach((el) => {
+    const [p, v] = el.dataset.pcer.split(":");
+    const vals = runs.filter((r) => r.version === v && r.summary.patterns[p]).map((r) => r.summary.patterns[p].cer);
+    if (vals.length) el.textContent = mean(vals).toFixed(Number(el.dataset.digits || 3));
+  });
   document.querySelectorAll("[data-version-title]").forEach((el) => (el.textContent = labels[el.dataset.versionTitle] || ""));
 }
 main().catch((e) => {

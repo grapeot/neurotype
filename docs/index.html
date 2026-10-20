@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Neurotype</title>
 <meta name="description" content="Managing an AI like a person: define done, measure, observe, coach, write the SOP, and let it improve itself while a human decides when to stop.">
+<link rel="icon" href="data:,">
 <link rel="stylesheet" href="assets/neurotype.css">
 <style>
   main.wrap { padding-top: 48px; }
@@ -87,17 +88,17 @@
       <table>
         <thead><tr><th>Pattern</th><th>Kind</th><th>What it looks like</th><th class="num">Items</th><th>Fix</th><th>Pattern CER before → after</th></tr></thead>
         <tbody>
-          <tr><td>casual voice</td><td><span class="kind policy">Policy</span></td><td>Slang, chat abbreviations, informal grammar, all lowercase.<br><span class="ex">tbh i dunno</span></td><td class="num">13</td><td>v2: keep the writer's voice</td><td class="num">0.196 → 0.004</td></tr>
-          <tr><td>glossary names</td><td><span class="kind">Context</span></td><td>Names typed by sound.<br><span class="ex">shivon → Siobhan</span></td><td class="num">12</td><td>v3: put the glossary in the prompt</td><td class="num">0.116 → 0.003</td></tr>
-          <tr><td>pasted verbatim</td><td><span class="kind policy">Policy</span></td><td>Quoted UI strings, code, URLs, emails, hashtags that must not change.<br><span class="ex">"Paymnet faild"</span></td><td class="num">18</td><td>v4: never touch pasted text</td><td class="num">0.047 → 0.006</td></tr>
-          <tr><td>shifted hands</td><td><span class="kind">Ability</span></td><td>Last words typed one key to the right.<br><span class="ex">yrcy ,r ;syrt → text me later</span></td><td class="num">5</td><td>v5: describe the drift and how to decode it</td><td class="num">0.29 → 0.16</td></tr>
+          <tr><td>casual voice</td><td><span class="kind policy">Policy</span></td><td>Slang, chat abbreviations, informal grammar, all lowercase.<br><span class="ex">tbh i dunno</span></td><td class="num">13</td><td>v2: keep the writer's voice</td><td class="num"><span data-pcer="casual_voice:v1">0.196</span> → <span data-pcer="casual_voice:v2">0.004</span></td></tr>
+          <tr><td>glossary names</td><td><span class="kind">Context</span></td><td>Names typed by sound.<br><span class="ex">shivon → Siobhan</span></td><td class="num">12</td><td>v3: put the glossary in the prompt</td><td class="num"><span data-pcer="glossary_names:v2">0.116</span> → <span data-pcer="glossary_names:v3">0.003</span></td></tr>
+          <tr><td>pasted verbatim</td><td><span class="kind policy">Policy</span></td><td>Quoted UI strings, code, URLs, emails, hashtags that must not change.<br><span class="ex">"Paymnet faild"</span></td><td class="num">18</td><td>v4: never touch pasted text</td><td class="num"><span data-pcer="pasted_verbatim:v3">0.047</span> → <span data-pcer="pasted_verbatim:v4">0.006</span></td></tr>
+          <tr><td>shifted hands</td><td><span class="kind">Ability</span></td><td>Last words typed one key to the right.<br><span class="ex">yrcy ,r ;syrt → text me later</span></td><td class="num">5</td><td>v5: describe the drift and how to decode it</td><td class="num"><span data-pcer="shifted_hands:v4" data-digits="2">0.30</span> → <span data-pcer="shifted_hands:v5" data-digits="2">0.16</span></td></tr>
           <tr><td>unknown names</td><td><span class="kind data">Data</span></td><td>New people and projects missing from the glossary.<br><span class="ex">keeva → Caoimhe</span></td><td class="num">6</td><td>None in the prompt. A human updates the glossary.</td><td class="num">stays near 0.08</td></tr>
-          <tr><td>plain typos</td><td>none</td><td>Ordinary slips.<br><span class="ex">Teh quarterly repport</span></td><td class="num">28</td><td>Any prompt (v1)</td><td class="num">0.103 → 0.002</td></tr>
+          <tr><td>plain typos</td><td>none</td><td>Ordinary slips.<br><span class="ex">Teh quarterly repport</span></td><td class="num">28</td><td>Any prompt (v1)</td><td class="num"><span data-pcer="plain_typos:v0">0.103</span> → <span data-pcer="plain_typos:v1">0.002</span></td></tr>
         </tbody>
       </table>
     </div>
     <div class="prose" style="margin-top:18px">
-      <p><b>Policy</b> failures happen when the model applies a defensible rule that is not ours. A human decides which rule is correct, and the prompt then states it. On both policy patterns, v1 was worse than doing nothing: casual voice went from 0.075 under the echo baseline to 0.196, pasted text from 0.042 to 0.062. <b>Context</b> failures happen when the answer depends on facts the input does not contain; the fix is to give the model those facts. <b>Ability</b> failures happen when the model knows what is wanted but does it unreliably; a described procedure helps, partly. <b>Data</b> failures happen when the answer exists nowhere in the system. No prompt can recover a name nobody wrote down.</p>
+      <p><b>Policy</b> failures happen when the model applies a defensible rule that is not ours. A human decides which rule is correct, and the prompt then states it. On both policy patterns, v1 was worse than doing nothing: casual voice went from <span data-pcer="casual_voice:v0">0.075</span> under the echo baseline to <span data-pcer="casual_voice:v1">0.196</span>, pasted text from <span data-pcer="pasted_verbatim:v0">0.042</span> to <span data-pcer="pasted_verbatim:v1">0.063</span>. <b>Context</b> failures happen when the answer depends on facts the input does not contain; the fix is to give the model those facts. <b>Ability</b> failures happen when the model knows what is wanted but does it unreliably; a described procedure helps, partly. <b>Data</b> failures happen when the answer exists nowhere in the system. No prompt can recover a name nobody wrote down.</p>
       <p>The dataset was tuned together with the corrector over four drafts, until each fix moved the total by a visible step. Three patterns were dropped along the way: messages that look like requests to the AI (the model never fell for them), British spelling (the model already kept it), and fully garbled messages (too noisy, and they dominated the score).</p>
     </div>
   </section>
@@ -109,12 +110,12 @@
     </div>
     <div class="fig card needs-data" id="curve"></div>
     <div class="prose">
-      <p>Each step is one human decision. v1 is the naive prompt, and the human's job there is reading the rationales. For v2 the human decided on a policy, "keep the writer's voice", and casual voice fell from 0.196 to 0.004. For v3 the human recognized missing context and put the glossary in the prompt; glossary names fell from 0.116 to 0.003. For v4 the human decided that pasted text is evidence and must not change; that pattern fell from 0.047 to 0.006. For v5 the human judged the shifted-hands errors worth one attempt and described the keyboard drift; the pattern fell from 0.29 to about 0.16. Unknown names stayed near 0.08 in every version. That is the floor.</p>
+      <p>Each step is one human decision. v1 is the naive prompt, and the human's job there is reading the rationales. For v2 the human decided on a policy, "keep the writer's voice", and casual voice fell from <span data-pcer="casual_voice:v1">0.196</span> to <span data-pcer="casual_voice:v2">0.004</span>. For v3 the human recognized missing context and put the glossary in the prompt; glossary names fell from <span data-pcer="glossary_names:v2">0.116</span> to <span data-pcer="glossary_names:v3">0.003</span>. For v4 the human decided that pasted text is evidence and must not change; that pattern fell from <span data-pcer="pasted_verbatim:v3">0.047</span> to <span data-pcer="pasted_verbatim:v4">0.006</span>. For v5 the human judged the shifted-hands errors worth one attempt and described the keyboard drift; the pattern fell from <span data-pcer="shifted_hands:v4" data-digits="2">0.30</span> to about <span data-pcer="shifted_hands:v5" data-digits="2">0.16</span>. Unknown names stayed near 0.08 in every version. That is the floor.</p>
     </div>
     <div class="fig card scroll-x needs-data" id="heat"></div>
     <p class="caption">CER per pattern and version, mean of three runs. Darker means more error. Hover a cell for the individual runs.</p>
     <div class="prose">
-      <p>The per-pattern view shows side effects that the total hides. In v2, "keep their capitalization" also kept typed names in lowercase, and glossary names went from 0.081 to 0.116 while the total improved. After v3 added the glossary, the model began seeing names everywhere: "me and hmi" became "me and Niamh", and "who aye my yogurt" became "who Aoife is". Casual voice rose from 0.004 to between 0.008 and 0.025. The glossary also pulls unknown names toward known ones: from v3 on, "osheen" (Oisin) becomes Siobhan in every run.</p>
+      <p>The per-pattern view shows side effects that the total hides. In v2, "keep their capitalization" also kept typed names in lowercase, and glossary names went from <span data-pcer="glossary_names:v1">0.081</span> to <span data-pcer="glossary_names:v2">0.116</span> while the total improved. After v3 added the glossary, the model began seeing names everywhere: "me and hmi" became "me and Niamh", and "who aye my yogurt" became "who Aoife is". Casual voice rose from <span data-pcer="casual_voice:v2">0.004</span> to between <span data-pcer="casual_voice:v4">0.008</span> and <span data-pcer="casual_voice:v3">0.025</span>. The glossary also pulls unknown names toward known ones: from v3 on, "osheen" (Oisin) becomes Siobhan in every run.</p>
     </div>
   </section>
 
@@ -169,7 +170,7 @@
     <p>The README explains how to run the benchmark, the app, the dashboard and the self-improvement loop. A full benchmark run takes about 17 to 25 seconds, 75,000 to 135,000 tokens and about $0.03 to $0.05 of platform credit; later prompts are longer because they carry the glossary and the rules, and the platform adds about 400 tokens of its own to every call. Two self-improvement iterations take under two minutes and about $0.32 with the script.</p>
   </section>
 </main>
-<footer class="foot"><div class="wrap">Neurotype is a teaching demo. The published pages read recorded results only; no key and no model call is involved. Fonts: Newsreader, Inter and JetBrains Mono under the SIL Open Font License.</div></footer>
+<footer class="foot"><div class="wrap">Source: <a href="https://github.com/grapeot/neurotype">github.com/grapeot/neurotype</a>. Neurotype is a teaching demo. The published pages read recorded results only; no key and no model call is involved. Fonts: Newsreader, Inter and JetBrains Mono under the SIL Open Font License.</div></footer>
 <script src="story.js"></script>
 </body>
 </html>

@@ -5,8 +5,10 @@ Type freely without caring about spelling; an AI reconstructs what you meant.
 This repo is a teaching demo for managing an AI the way you would manage a person:
 define what "done" means, build an evaluation, make the system observable, coach it from
 failure patterns, write the coaching down as an SOP, and then let the AI improve itself
-by following that SOP while a human decides when to stop. The story, with recorded results,
-is on the project site (`docs/index.html`, published with GitHub Pages).
+by following that SOP while a human decides when to stop.
+
+**Project site, with the story and the dashboard on recorded results:** https://grapeot.github.io/neurotype/
+(source: `docs/`; repository: https://github.com/grapeot/neurotype)
 
 ## Setup
 
@@ -88,10 +90,35 @@ known good state before it:
 | `checkpoint-c` | Plus v2 (the first coached fix), `SOP.md`, `IMPROVE.md`, `auto_improve.py`. | "Consult SOP.md and run two improvement iterations on the current prompt." |
 | `main` | Plus the reference path v3 to v5, the pattern table, the site and the session records. | |
 
+To reset before a live step, park any live changes and (re)create a scratch branch at the checkpoint:
+
 ```bash
-git stash -u                      # park any live changes
-git switch -C live checkpoint-b   # (re)create a scratch branch at the checkpoint
+git stash -u && git switch -C live checkpoint-a   # before building the dashboard
+git stash -u && git switch -C live checkpoint-b   # before the coaching session (v2)
+git stash -u && git switch -C live checkpoint-c   # before the self-improvement step
+git switch main                                    # back to the full reference state
 ```
+
+## Running the live step with Codex
+
+The self-improvement step is one line to a coding agent opened in the repo:
+
+```
+Consult SOP.md and run two improvement iterations on the current prompt. Use .venv/bin/python to run the scripts.
+```
+
+What we learned running it with Codex CLI (two iterations took 103 seconds):
+
+- Tell the agent to use `.venv/bin/python`. Otherwise it may reach for a system Python without `openai`.
+- Codex strips environment variables that look like secrets (anything with TOKEN or KEY in the name)
+  from the commands it runs, so an exported `AI_BUILDER_TOKEN` does not reach `run_eval.py`. Put the
+  token in `.env` instead; the code reads it from there.
+- If Codex rejects its default model ("model is not supported"), pass one explicitly, for example
+  `codex exec -m gpt-6-astra ...`.
+- Network access must be allowed for the sandbox, for example
+  `codex exec -s workspace-write -c sandbox_workspace_write.network_access=true "<the line above>"`.
+
+If no coding agent is at hand, `python auto_improve.py --iterations 2` runs the same loop (about 105 s).
 
 ## Publish the site
 

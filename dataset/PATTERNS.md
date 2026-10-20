@@ -27,7 +27,7 @@ with `deepseek` (pass 1, 2026-10-20).
 | `plain_typos` | none | Ordinary slips: neighbor keys, dropped, swapped, doubled letters, missing spaces. `Teh quarterly repport is dueon Fiday` | 28 | v1 (any prompt) | 0.002 (0.001) | 0.103 → 0.002 | part of v0 → v1 |
 | `casual_voice` | Policy | Slang, chat abbreviations, nonstandard grammar, all lowercase. v1 turns `tbh i dunno` into `To be honest, I don't know`. | 13 | v2: keep the writer's voice | 0.196 (0.031) | 0.196 → 0.004 | 0.079 → 0.051 |
 | `glossary_names` | Context | People, projects and places typed by sound: `shivon`, `wakeen`, `kestrel` for Siobhan, Joaquin, Kestrl. | 12 | v3: inline `data/glossary.md` | 0.081 (0.012) | 0.116 → 0.003 | 0.051 → 0.037 |
-| `pasted_verbatim` | Policy | Pasted text that must stay byte for byte: quoted UI strings with typos, code in backticks, URLs, emails, hashtags. `"Paymnet faild, plase try agian"` | 18 | v4: never touch pasted spans | 0.062 (0.014) | 0.047 → 0.006 | 0.037 → 0.028 |
+| `pasted_verbatim` | Policy | Pasted text that must stay byte for byte: quoted UI strings with typos, code in backticks, URLs, emails, hashtags. `"Paymnet faild, plase try agian"` | 18 | v4: never touch pasted spans | 0.063 (0.014) | 0.047 → 0.006 | 0.037 → 0.028 |
 | `shifted_hands` | Ability | The last 2 or 3 words typed with both hands one key to the right: `text me later` became `yrcy ,r ;syrt`. | 5 | v5: describe the drift and how to decode it | 0.268 (0.016) | 0.299 → 0.161 | 0.028 → 0.021 |
 | `unknown_names` | Data | Like `glossary_names`, but the person or project is new and missing from the glossary: `keeva` for Caoimhe. | 6 | Nothing in the prompt. A human updates the glossary. | 0.078 (0.006) | stays 0.08 to 0.09 | the floor |
 
@@ -38,7 +38,7 @@ from v1 to v5 is larger than the noise, and the run ranges of neighboring versio
 ## What each fix teaches
 
 **v1 is worse than doing nothing on two patterns.** On `casual_voice` the echo baseline scores 0.075
-and v1 scores 0.196; on `pasted_verbatim` 0.042 against 0.062. A naive prompt does not only fail to
+and v1 scores 0.196; on `pasted_verbatim` 0.042 against 0.063. A naive prompt does not only fail to
 help, it damages what was already right. Only the per-pattern view shows this; the total improved.
 
 **v2 has a side effect.** Keeping the writer's capitalization also kept typed names lowercase, so
