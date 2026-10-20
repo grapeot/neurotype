@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neurotype Dashboard</title>
+<link rel="stylesheet" href="assets/neurotype.css">
+<style>
+  main.wrap { padding-top: 32px; }
+  .layer-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-top: 36px; }
+  .layer-head h2 { margin: 0; }
+  .chart-card { margin-top: 16px; position: relative; }
+  svg text { font-family: var(--sans); fill: var(--ink-3); font-size: 12px; }
+  .tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--paper); font-size: .8rem; padding: 6px 9px; border-radius: 6px; white-space: nowrap; display: none; z-index: 3; }
+  .runs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .run-chip { font: .82rem var(--mono); border: 1px solid var(--rule); background: var(--card); color: var(--ink); border-radius: 6px; padding: 2px 7px; cursor: pointer; }
+  .run-chip:hover, .run-chip.on { border-color: var(--green); outline: 1px solid var(--green); }
+  td.heat { font-family: var(--mono); text-align: right; font-size: .82rem; }
+  tr.vrow:hover td { background: var(--paper-2); }
+  .filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 14px 0; }
+  .case { border-top: 1px solid var(--rule); padding: 14px 0; display: grid; grid-template-columns: 120px 1fr; gap: 6px 16px; }
+  @media (max-width: 700px) { .case { grid-template-columns: 1fr; } }
+  .case .lab { font: 600 .7rem var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
+  .case .txt { font: .95rem/1.5 var(--mono); word-break: break-word; }
+  .case .rat { font: 1rem/1.5 var(--serif); color: var(--ink-2); }
+  .case-head { grid-column: 1 / -1; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .delta-up { color: var(--second); } .delta-down { color: var(--green-text); }
+  .note { border-left: 3px solid var(--green); padding: 6px 12px; background: var(--card); margin: 12px 0; font-size: .92rem; }
+  details.prompt pre { white-space: pre-wrap; font: .8rem/1.45 var(--mono); background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 12px; max-height: 420px; overflow: auto; }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html">Neuro<span>type</span></a>
+  <nav><a href="index.html" id="nav-type">Story</a><a href="dashboard.html" aria-current="page">Dashboard</a></nav>
+</div></header>
+<main class="wrap">
+  <div class="kicker">Evaluation dashboard</div>
+  <h1>Is it getting better, and why?</h1>
+  <p class="lede narrow">Metric: <b>character error rate (CER)</b>, the edit distance between the output and the ground truth divided by the length of the ground truth. <b>Lower is better.</b> 0 means a perfect reconstruction.</p>
+
+  <div class="layer-head"><h2>Layer 1 · What</h2><span class="muted">every version, every run</span></div>
+  <div class="card chart-card" id="chart-card">
+    <div id="chart"></div>
+    <div class="tip" id="tip"></div>
+    <label class="small" style="position:absolute;right:20px;top:14px"><input type="checkbox" id="zoom"> Zoom to the data</label>
+    <p class="small muted" style="margin:6px 0 0">Each dot is one full run. The line connects the mean of each version. Dots of the same version differ only because the model is not perfectly repeatable.</p>
+  </div>
+  <div class="note" id="noise-note"></div>
+  <div class="card scroll-x" style="margin-top:16px">
+    <table id="versions"></table>
+  </div>
+
+  <div class="layer-head"><h2>Layer 2 · Why</h2><span class="muted" id="run-label"></span></div>
+  <div class="filters">
+    <label class="small">Run <select id="run-sel"></select></label>
+    <label class="small">Compare with <select id="cmp-sel"><option value="">(none)</option></select></label>
+    <label class="small">Pattern <select id="pat-sel"><option value="">all</option></select></label>
+    <label class="small">Show <select id="show-sel">
+      <option value="errors">errors only</option><option value="all">all cases</option>
+      <option value="changed">changed vs compare</option></select></label>
+    <label class="small">Sort <select id="sort-sel"><option value="cer">worst first</option><option value="id">by id</option><option value="delta">biggest change</option></select></label>
+  </div>
+  <details class="prompt" id="prompt-box"><summary class="small">Prompt for this run</summary><pre id="prompt-src"></pre></details>
+  <div id="cases"></div>
+</main>
+<footer class="foot"><div class="wrap">Reads recorded runs from <code>results/</code>. Works from the local server or as a static page.</div></footer>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const f3 = (x) => x.toFixed(3);
+const mean = (a) => a.reduce((s, x) => s + x, 0) / a.length;
+const sd = (a) => a.length < 2 ? 0 : Math.sqrt(a.reduce((s, x) => s + (x - mean(a)) ** 2, 0) / (a.length - 1));
+const cache = {};
+let INDEX = null, VERSIONS = [], PATTERNS = [];
+
+async function getRun(path) {
+  if (!cache[path]) cache[path] = fetch("results/" + path).then((r) => r.json());
+  return cache[path];
+}
+
+// Character-level diff of output against ground truth (LCS), for short texts.
+function cdiff(truth, out) {
+  const A = [...truth], B = [...out], n = A.length, m = B.length;
+  const L = Array.from({length: n + 1}, () => new Int16Array(m + 1));
+  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--)
+    L[i][j] = A[i] === B[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1]);
+  let i = 0, j = 0, html = "", buf = "", mode = "";
+  const flush = () => { if (!buf) return; html += mode === "add" ? `<ins class="add">${esc(buf)}</ins>` : mode === "rem" ? `<del class="rem">${esc(buf)}</del>` : esc(buf); buf = ""; };
+  const push = (ch, md) => { if (md !== mode) { flush(); mode = md; } buf += ch; };
+  while (i < n && j < m) {
+    if (A[i] === B[j]) { push(A[i], ""); i++; j++; }
+    else if (L[i + 1][j] >= L[i][j + 1]) { push(A[i], "rem"); i++; }
+    else { push(B[j], "add"); j++; }
+  }
+  while (i < n) push(A[i++], "rem");
+  while (j < m) push(B[j++], "add");
+  flush();
+  return html;
+}
+
+function shade(v) {
+  // single-hue magnitude: 0 = paper, 0.15+ = full oxblood tint
+  const a = Math.min(1, v / 0.15);
+  return `background: color-mix(in srgb, var(--second) ${Math.round(a * 38)}%, transparent)`;
+}
+
+function drawChart() {
+  const W = Math.min(1080, $("#chart-card").clientWidth - 40), H = 300, P = {l: 52, r: 16, t: 16, b: 34};
+  const runs = INDEX.runs.filter((r) => r.summary.n === INDEX.fullN);
+  const zoom = $("#zoom").checked;
+  const cers = runs.map((r) => r.summary.cer);
+  const lo = Math.min(...cers), hi = Math.max(...cers);
+  const step = zoom ? [0.001, 0.002, 0.005, 0.01, 0.02].find((st) => (hi - lo) / st <= 7) || 0.02 : 0.02;
+  const ymin = zoom ? Math.floor(lo / step) * step : 0;
+  const ymax = Math.max(ymin + step, Math.ceil(hi / step) * step);
+  const xs = (i) => P.l + (VERSIONS.length === 1 ? (W - P.l - P.r) / 2 : i * (W - P.l - P.r) / (VERSIONS.length - 1));
+  const ys = (v) => P.t + (1 - (v - ymin) / (ymax - ymin)) * (H - P.t - P.b);
+  let g = "";
+  const ticks = Math.round((ymax - ymin) / step);
+  const dec = step < 0.01 ? 3 : 2;
+  for (let k = 0; k <= ticks; k++) {
+    const v = ymin + step * k;
+    g += `<line x1="${P.l}" x2="${W - P.r}" y1="${ys(v)}" y2="${ys(v)}" stroke="var(--rule)" stroke-width="1"/>`;
+    g += `<text x="${P.l - 8}" y="${ys(v) + 4}" text-anchor="end">${v.toFixed(dec)}</text>`;
+  }
+  g += `<text x="${P.l}" y="${P.t - 4}" font-size="11">CER (lower is better)</text>`;
+  const means = VERSIONS.map((v, i) => {
+    const rs = runs.filter((r) => r.version === v).map((r) => r.summary.cer);
+    return rs.length ? [xs(i), ys(mean(rs))] : null;
+  });
+  const pts = means.filter(Boolean);
+  g += `<polyline points="${pts.map((p) => p.join(",")).join(" ")}" fill="none" stroke="var(--green)" stroke-width="2"/>`;
+  VERSIONS.forEach((v, i) => {
+    g += `<text x="${xs(i)}" y="${H - 10}" text-anchor="middle" font-size="13" style="fill:var(--ink-2)">${v}</text>`;
+    const rs = runs.filter((r) => r.version === v);
+    rs.forEach((r, k) => {
+      const dx = (k - (rs.length - 1) / 2) * 9;
+      g += `<circle cx="${xs(i) + dx}" cy="${ys(r.summary.cer)}" r="5" fill="var(--card)" stroke="var(--ink)" stroke-width="1.5"
+        data-tip="${esc(v)} run ${k + 1}: CER ${f3(r.summary.cer)}" data-path="${esc(r.path)}" style="cursor:pointer"/>`;
+    });
+    if (rs.length) g += `<circle cx="${means[i][0]}" cy="${means[i][1]}" r="3" fill="var(--green)"/>`;
+  });
+  $("#chart").innerHTML = `<svg width="${W}" height="${H}" role="img" aria-label="CER by version">${g}</svg>`;
+  $("#chart").querySelectorAll("circle[data-tip]").forEach((c) => {
+    c.addEventListener("mousemove", (e) => {
+      const box = $("#chart-card").getBoundingClientRect();
+      const t = $("#tip"); t.style.display = "block"; t.textContent = c.dataset.tip;
+      t.style.left = (e.clientX - box.left + 12) + "px"; t.style.top = (e.clientY - box.top - 28) + "px";
+    });
+    c.addEventListener("mouseleave", () => ($("#tip").style.display = "none"));
+    c.addEventListener("click", () => selectRun(c.dataset.path, true));
+  });
+}
+
+function drawTable() {
+  const full = INDEX.runs.filter((r) => r.summary.n === INDEX.fullN);
+  let h = `<thead><tr><th>Version</th><th>Runs (CER each)</th><th class="num">Mean CER</th><th class="num" title="max minus min across repeated runs">Range</th><th class="num">Exact</th>`;
+  h += PATTERNS.map((p) => `<th class="num" title="${p}">${p.replace(/_/g, " ")}</th>`).join("") + `</tr></thead><tbody>`;
+  const spreads = [];
+  VERSIONS.forEach((v) => {
+    const rs = full.filter((r) => r.version === v);
+    if (!rs.length) return;
+    const c = rs.map((r) => r.summary.cer);
+    const spread = Math.max(...c) - Math.min(...c);
+    if (rs.length > 1) spreads.push([v, spread]);
+    const title = rs[rs.length - 1].title.replace(/^v\d+:\s*/, "");
+    h += `<tr class="vrow"><td><b>${v}</b><div class="small muted">${esc(title)}</div></td>`;
+    h += `<td><div class="runs">${rs.map((r, k) => `<button class="run-chip" data-path="${esc(r.path)}" title="${esc(r.run_id)}">${k + 1}: ${f3(r.summary.cer)}</button>`).join("")}</div></td>`;
+    h += `<td class="num"><b>${f3(mean(c))}</b></td><td class="num">${rs.length > 1 ? f3(spread) : "–"}</td>`;
+    h += `<td class="num">${Math.round(mean(rs.map((r) => r.summary.exact)) * 100)}%</td>`;
+    h += PATTERNS.map((p) => {
+      const vals = rs.map((r) => r.summary.patterns[p]?.cer).filter((x) => x !== undefined);
+      if (!vals.length) return `<td class="heat">–</td>`;
+      const m = mean(vals);
+      return `<td class="heat" style="${shade(m)}" title="${p}: ${vals.map(f3).join(", ")}">${f3(m)}</td>`;
+    }).join("");
+    h += `</tr>`;
+  });
+  $("#versions").innerHTML = h + "</tbody>";
+  $("#versions").querySelectorAll(".run-chip").forEach((b) => b.addEventListener("click", () => selectRun(b.dataset.path, true)));
+  if (spreads.length) {
+    const worst = spreads.reduce((a, b) => (b[1] > a[1] ? b : a));
+    $("#noise-note").innerHTML = `<b>Noise floor.</b> Re-running an unchanged version moves its score by up to <b>${f3(worst[1])}</b> (max minus min, ${worst[0]}). ` +
+      `Per version: ${spreads.map(([v, s]) => `${v} ${f3(s)}`).join(" · ")}. Only a change clearly larger than this counts as an improvement.`;
+  } else $("#noise-note").style.display = "none";
+}
+
+async function selectRun(path, scroll) {
+  $("#run-sel").value = path;
+  await drawCases();
+  if (scroll) $("#run-label").scrollIntoView({behavior: "smooth", block: "start"});
+}
+
+async function drawCases() {
+  const run = await getRun($("#run-sel").value);
+  const cmpPath = $("#cmp-sel").value;
+  const cmp = cmpPath ? await getRun(cmpPath) : null;
+  const byId = cmp ? Object.fromEntries(cmp.items.map((it) => [it.id, it])) : {};
+  $("#run-label").textContent = `${run.version} · ${run.run_id} · ${run.model} · CER ${f3(run.summary.cer)} · ${run.elapsed_s}s`;
+  $("#prompt-src").textContent = run.prompt_source || "(v0 has no prompt: it returns the input unchanged)";
+  const pat = $("#pat-sel").value, show = $("#show-sel").value, sort = $("#sort-sel").value;
+  let items = run.items.map((it) => ({...it, prev: byId[it.id]}));
+  if (pat) items = items.filter((it) => it.pattern === pat);
+  if (show === "errors") items = items.filter((it) => it.cer > 0);
+  if (show === "changed") items = items.filter((it) => it.prev && Math.abs(it.cer - it.prev.cer) > 1e-9);
+  const d = (it) => (it.prev ? it.cer - it.prev.cer : 0);
+  items.sort(sort === "id" ? (a, b) => a.id - b.id : sort === "delta" ? (a, b) => Math.abs(d(b)) - Math.abs(d(a)) : (a, b) => b.cer - a.cer || a.id - b.id);
+  const better = cmp ? run.items.filter((it) => byId[it.id] && it.cer < byId[it.id].cer - 1e-9).length : 0;
+  const worse = cmp ? run.items.filter((it) => byId[it.id] && it.cer > byId[it.id].cer + 1e-9).length : 0;
+  let h = `<p class="small muted">${items.length} case(s) shown.` + (cmp ? ` Versus ${esc(cmp.version)} (${esc(cmp.run_id)}): <span class="good">${better} improved</span>, <span class="bad">${worse} regressed</span>.` : "") + `</p>`;
+  for (const it of items) {
+    const delta = it.prev ? d(it) : null;
+    h += `<div class="case"><div class="case-head"><b class="mono">#${it.id}</b><span class="pill">${esc(it.pattern.replace(/_/g, " "))}</span>
+      <span class="mono">CER ${f3(it.cer)}</span>${delta !== null && Math.abs(delta) > 1e-9 ? `<span class="mono ${delta > 0 ? "delta-up" : "delta-down"}">${delta > 0 ? "▲ worse" : "▼ better"} ${f3(Math.abs(delta))} vs ${esc(cmp.version)}</span>` : ""}
+      ${it.exact ? '<span class="pill good">exact</span>' : ""}${it.parse_error ? '<span class="pill bad">not JSON</span>' : ""}</div>
+      <div class="lab">Typed</div><div class="txt">${esc(it.messy_text)}</div>
+      <div class="lab">Expected</div><div class="txt">${esc(it.ground_truth)}</div>
+      <div class="lab">Output</div><div class="txt">${cdiff(it.ground_truth, it.output)}</div>
+      ${it.prev ? `<div class="lab">${esc(cmp.version)} output</div><div class="txt">${cdiff(it.ground_truth, it.prev.output)}</div>` : ""}
+      <div class="lab">Rationale</div><div class="rat">${esc(it.rationale)}</div></div>`;
+  }
+  $("#cases").innerHTML = h + `<p class="small muted">In outputs, <del class="rem">red</del> is expected text that is missing and <ins class="add">green</ins> is text that should not be there.</p>`;
+}
+
+async function init() {
+  try {
+    INDEX = await (await fetch("results/index.json")).json();
+  } catch (e) {
+    $("#chart").innerHTML = '<p class="bad">No results found. Run <code>python run_eval.py v0</code> first.</p>';
+    return;
+  }
+  INDEX.fullN = Math.max(...INDEX.runs.map((r) => r.summary.n));
+  VERSIONS = [...new Set(INDEX.runs.map((r) => r.version))];
+  PATTERNS = [...new Set(INDEX.runs.flatMap((r) => Object.keys(r.summary.patterns)))];
+  if (new URLSearchParams(location.search).get("zoom")) $("#zoom").checked = true;
+  drawChart(); drawTable();
+  const opts = INDEX.runs.filter((r) => r.summary.n === INDEX.fullN).map((r) => `<option value="${esc(r.path)}">${esc(r.version)} · ${esc(r.run_id)} · CER ${f3(r.summary.cer)}</option>`).join("");
+  $("#run-sel").innerHTML = opts;
+  $("#cmp-sel").innerHTML = `<option value="">(none)</option>` + opts;
+  $("#pat-sel").innerHTML = `<option value="">all</option>` + PATTERNS.map((p) => `<option>${p}</option>`).join("");
+  const params = new URLSearchParams(location.search);
+  const last = INDEX.runs.filter((r) => r.summary.n === INDEX.fullN).at(-1);
+  $("#run-sel").value = params.get("run") || last.path;
+  const prevVersion = VERSIONS[VERSIONS.indexOf(last.version) - 1];
+  const prev = INDEX.runs.filter((r) => r.version === prevVersion && r.summary.n === INDEX.fullN).at(-1);
+  if (prev && !params.get("run")) $("#cmp-sel").value = prev.path;
+  ["#run-sel", "#cmp-sel", "#pat-sel", "#show-sel", "#sort-sel"].forEach((s) => $(s).addEventListener("change", drawCases));
+  await drawCases();
+  window.addEventListener("resize", drawChart);
+  $("#zoom").addEventListener("change", drawChart);
+}
+init();
+</script>
+</body>
+</html>

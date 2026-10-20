@@ -59,6 +59,7 @@ header.top .wrap { display: flex; align-items: center; gap: 20px; height: 56px; 
 header.top .brand { font-family: var(--serif); font-weight: 600; font-size: 1.3rem; color: var(--ink); text-decoration: none; }
 header.top .brand span { color: var(--green); }
 header.top nav { display: flex; gap: 16px; margin-left: auto; flex-wrap: wrap; }
+body { overflow-wrap: break-word; }
 header.top nav a { color: var(--ink-2); text-decoration: none; font-size: .92rem; }
 header.top nav a[aria-current="page"] { color: var(--ink); border-bottom: 2px solid var(--green); }
 

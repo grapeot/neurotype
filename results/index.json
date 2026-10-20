@@ -336,6 +336,438 @@
     }
    },
    "path": "v2/20261020-143252.json"
+  },
+  {
+   "version": "v3",
+   "run_id": "20261020-143310",
+   "title": "v3: give the model the writer's glossary",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:33:10+00:00",
+   "elapsed_s": 17.8,
+   "total_tokens": 107141,
+   "summary": {
+    "cer": 0.0381,
+    "exact": 0.5976,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0024,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0249,
+      "exact": 0.6923,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0011,
+      "exact": 0.9167,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.0806,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0477,
+      "exact": 0.1111,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.2759,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v3/20261020-143310.json"
+  },
+  {
+   "version": "v3",
+   "run_id": "20261020-143327",
+   "title": "v3: give the model the writer's glossary",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:33:27+00:00",
+   "elapsed_s": 16.8,
+   "total_tokens": 107142,
+   "summary": {
+    "cer": 0.0338,
+    "exact": 0.622,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0024,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0249,
+      "exact": 0.6923,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0032,
+      "exact": 0.9167,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.0785,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0427,
+      "exact": 0.1667,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.2203,
+      "exact": 0.2,
+      "n": 5
+     }
+    }
+   },
+   "path": "v3/20261020-143327.json"
+  },
+  {
+   "version": "v3",
+   "run_id": "20261020-143345",
+   "title": "v3: give the model the writer's glossary",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:33:45+00:00",
+   "elapsed_s": 18.1,
+   "total_tokens": 107237,
+   "summary": {
+    "cer": 0.0384,
+    "exact": 0.5854,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0024,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0249,
+      "exact": 0.6923,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0032,
+      "exact": 0.9167,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.07,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0513,
+      "exact": 0.0556,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.2759,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v3/20261020-143345.json"
+  },
+  {
+   "version": "v4",
+   "run_id": "20261020-143402",
+   "title": "v4: never touch pasted text",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:34:02+00:00",
+   "elapsed_s": 16.5,
+   "total_tokens": 114678,
+   "summary": {
+    "cer": 0.0291,
+    "exact": 0.7683,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0039,
+      "exact": 0.9286,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0106,
+      "exact": 0.8462,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0011,
+      "exact": 0.9167,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.0814,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0053,
+      "exact": 0.8333,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.3083,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v4/20261020-143402.json"
+  },
+  {
+   "version": "v4",
+   "run_id": "20261020-143420",
+   "title": "v4: never touch pasted text",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:34:20+00:00",
+   "elapsed_s": 18.1,
+   "total_tokens": 114519,
+   "summary": {
+    "cer": 0.0266,
+    "exact": 0.7439,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0028,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0041,
+      "exact": 0.7692,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0022,
+      "exact": 0.8333,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.0792,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.008,
+      "exact": 0.7778,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.2812,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v4/20261020-143420.json"
+  },
+  {
+   "version": "v4",
+   "run_id": "20261020-143438",
+   "title": "v4: never touch pasted text",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:34:38+00:00",
+   "elapsed_s": 17.7,
+   "total_tokens": 114610,
+   "summary": {
+    "cer": 0.0284,
+    "exact": 0.7439,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0028,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.008,
+      "exact": 0.6923,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0011,
+      "exact": 0.9167,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.0806,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0062,
+      "exact": 0.7778,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.3083,
+      "exact": 0,
+      "n": 5
+     }
+    }
+   },
+   "path": "v4/20261020-143438.json"
+  },
+  {
+   "version": "v5",
+   "run_id": "20261020-145245",
+   "title": "v5: decode drifted hands",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:52:45+00:00",
+   "elapsed_s": 17.5,
+   "total_tokens": 130826,
+   "summary": {
+    "cer": 0.0202,
+    "exact": 0.7439,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0039,
+      "exact": 0.9286,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0087,
+      "exact": 0.7692,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0022,
+      "exact": 0.8333,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.0792,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0089,
+      "exact": 0.7222,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.1537,
+      "exact": 0.4,
+      "n": 5
+     }
+    }
+   },
+   "path": "v5/20261020-145245.json"
+  },
+  {
+   "version": "v5",
+   "run_id": "20261020-145302",
+   "title": "v5: decode drifted hands",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:53:02+00:00",
+   "elapsed_s": 17.4,
+   "total_tokens": 130795,
+   "summary": {
+    "cer": 0.0215,
+    "exact": 0.7561,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0028,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0157,
+      "exact": 0.6923,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0011,
+      "exact": 0.9167,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.07,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0089,
+      "exact": 0.7222,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.1769,
+      "exact": 0.4,
+      "n": 5
+     }
+    }
+   },
+   "path": "v5/20261020-145302.json"
+  },
+  {
+   "version": "v5",
+   "run_id": "20261020-145320",
+   "title": "v5: decode drifted hands",
+   "model": "deepseek",
+   "started_at": "2026-10-20T21:53:20+00:00",
+   "elapsed_s": 18.4,
+   "total_tokens": 130728,
+   "summary": {
+    "cer": 0.0216,
+    "exact": 0.7561,
+    "n": 82,
+    "parse_errors": 0,
+    "patterns": {
+     "plain_typos": {
+      "cer": 0.0012,
+      "exact": 0.9643,
+      "n": 28
+     },
+     "casual_voice": {
+      "cer": 0.0249,
+      "exact": 0.6923,
+      "n": 13
+     },
+     "glossary_names": {
+      "cer": 0.0011,
+      "exact": 0.9167,
+      "n": 12
+     },
+     "unknown_names": {
+      "cer": 0.0792,
+      "exact": 0,
+      "n": 6
+     },
+     "pasted_verbatim": {
+      "cer": 0.0089,
+      "exact": 0.7222,
+      "n": 18
+     },
+     "shifted_hands": {
+      "cer": 0.1537,
+      "exact": 0.4,
+      "n": 5
+     }
+    }
+   },
+   "path": "v5/20261020-145320.json"
   }
  ]
 }

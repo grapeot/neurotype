@@ -251,7 +251,6 @@ async function init() {
   window.addEventListener("resize", drawChart);
   $("#zoom").addEventListener("change", drawChart);
 }
-if (location.protocol !== "file:" && !location.pathname.includes("/docs/") && document.body.dataset.static === "1") $("#nav-type").remove();
 init();
 </script>
 </body>
