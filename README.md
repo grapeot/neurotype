@@ -85,21 +85,69 @@ known good state before it:
 
 | Tag | State | Next live step |
 |---|---|---|
+| `checkpoint-0` | Only the dataset (typed/meant pairs, no pattern labels), `requirements.txt`, `.env.example` and a task README. No metric, runner, client or prompts. A separate root commit. | Build the evaluation live (the ask below). |
 | `checkpoint-a` | Dataset, metric, baseline (v0) and the naive prompt (v1) with three recorded runs. | Build the dashboard. |
 | `checkpoint-b` | Plus the two-layer dashboard with rationales and repeated runs. | Diagnose v1's failure patterns, coach v2. |
 | `checkpoint-c` | Plus v2 (the first coached fix), `SOP.md`, `IMPROVE.md`, `auto_improve.py`. | "Consult SOP.md and run two improvement iterations on the current prompt." |
 | `main` | Plus the reference path v3 to v5, the pattern table, the site and the session records. | |
 
-To reset before a live step, park any live changes and (re)create a scratch branch at the checkpoint:
+### The live flow
+
+1. **Build the evaluation live from `checkpoint-0`.** Open a coding agent in the repo and paste:
+
+   ```
+   Build an evaluation for the corrector. Done means: messy/clean pairs in data/; a script that scores any version with normalized edit distance (edit distance divided by the length of the clean text; lower is better); a baseline that returns the input unchanged; then a first prompt v1: a plain prompt that asks the model to fix all spelling and typing errors, not tuned to the dataset, and returns JSON with the corrected text and a one-sentence rationale; and run the baseline and v1 on the full dataset.
+   ```
+
+   The agent gets the API details (base URL, authentication) from the AI Builder Coach MCP and
+   writes the client itself. Measured with Codex CLI from a clean checkout, four runs: 63 to 141 s
+   end to end; the baseline scored 0.1087 every time and v1 scored 0.064 to 0.068.
+2. **Switch to `checkpoint-a`: the same ask, prepared earlier.** It has the reference evaluation
+   (`run_eval.py`, CER, v0, v1 with three recorded runs; v1 is 0.079 there because its prompt is
+   worded slightly differently). Continue with the dashboard, coaching and self-improvement steps
+   from `checkpoint-a`, `-b` and `-c`.
+
+Why the ask is worded this way: with only "a first prompt v1", the agent read the dataset and wrote
+a v1 that already handled every failure pattern (0.038), which leaves nothing to coach. Without the
+JSON output requirement, `deepseek` sometimes answered the typed text as if it were a request
+("I can't send messages to Shivon for you"), and v1 scored 0.61 to 0.75, worse than doing nothing.
+Naming the length of the clean text as the denominator makes the baseline match the reference
+(0.1087); dividing by the longer string gives 0.1084.
+
+### Reset commands
+
+Park any live changes and (re)create a scratch branch at the checkpoint:
 
 ```bash
-git stash -u && git switch -C live checkpoint-a   # before building the dashboard
+git stash -u && git switch -C live checkpoint-0   # before building the evaluation
+git stash -u && git switch -C live checkpoint-a   # the same evaluation, prepared earlier; before building the dashboard
 git stash -u && git switch -C live checkpoint-b   # before the coaching session (v2)
 git stash -u && git switch -C live checkpoint-c   # before the self-improvement step
 git switch main                                    # back to the full reference state
 ```
 
-## Running the live step with Codex
+## Running the live steps with Codex
+
+The `.venv` and `.env` are untracked, so they survive every switch between checkpoints. Set them up
+once on `main` before class.
+
+For the evaluation build at `checkpoint-0`, the agent needs the AI Builder Coach MCP
+(`@aibuilders/mcp-coach-server`, configured under `[mcp_servers.ai-builders-coach]` in
+`~/.codex/config.toml`). In the interactive Codex UI, approve its three calls when asked
+(`get_base_url`, `explain_authentication_model`, `get_api_specification`); they add about two
+seconds. With `codex exec` the calls fail unless the tools are pre-approved, because exec never asks:
+
+```toml
+[mcp_servers.ai-builders-coach.tools.get_base_url]
+approval_mode = "approve"
+[mcp_servers.ai-builders-coach.tools.get_api_specification]
+approval_mode = "approve"
+[mcp_servers.ai-builders-coach.tools.explain_authentication_model]
+approval_mode = "approve"
+```
+
+Without them Codex fell back to fetching the public API documentation, which worked in our test
+but skips the MCP you want to show.
 
 The self-improvement step is one line to a coding agent opened in the repo:
 
